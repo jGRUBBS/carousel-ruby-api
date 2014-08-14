@@ -1,11 +1,10 @@
-module Trebbianno
+module Carousel
   class Tracking
 
     attr_accessor :carrier
 
-    FEDEX = "http://printtracking.fedex.com/trackOrder.do?gtns=:tracking_number"
-    USPS  = "https://tools.usps.com/go/TrackConfirmAction.action?tLabels=:tracking_number"
-    UPS   = "http://wwwapps.ups.com/WebTracking/track?trackNums=:tracking_number&track.x=Track"
+    FEDEX    = "http://www.fedexuk.net/accounts/QuickTrack.aspx?consignment=:tracking_number"
+    CAROUSEL = "https://web.carousel.eu/easyweb/default.asp?action=clienttrack&type=Carousel&acct1=BEC01&reference=:tracking_number"
 
     def initialize(carrier, tracking_number)
       @carrier         = carrier

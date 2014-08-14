@@ -1,15 +1,15 @@
-# Trebbianno
+# Carousel
 
-[![Build Status](https://travis-ci.org/jGRUBBS/trebbianno-ruby-api.svg?branch=master)](https://travis-ci.org/jGRUBBS/trebbianno-ruby-api)
-[![Code Climate](https://codeclimate.com/github/jGRUBBS/trebbianno-ruby-api.png)](https://codeclimate.com/github/jGRUBBS/trebbianno-ruby-api)
+[![Build Status](https://travis-ci.org/jGRUBBS/carousel-ruby-api.svg?branch=master)](https://travis-ci.org/jGRUBBS/carousel-ruby-api)
+[![Code Climate](https://codeclimate.com/github/jGRUBBS/carousel-ruby-api.png)](https://codeclimate.com/github/jGRUBBS/carousel-ruby-api)
 
-Ruby library for interfacing with the Trebbianno Fulfillment API
+Ruby library for interfacing with the Carousel Fulfillment API
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'trebbianno-ruby-api'
+    gem 'carousel-ruby-api'
 
 And then execute:
 
@@ -17,7 +17,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install trebbianno-ruby-api
+    $ gem install carousel-ruby-api
 
 ## Usage
 
@@ -27,6 +27,16 @@ Send order request
 
 order = {
   shipping_address: {
+    first_name: "John",
+    last_name:  "Smith",
+    address1:   "123 Here Now",
+    address2:   "2nd Floor",
+    city:       "New York",
+    country:    "US",
+    zipcode:    "10012",
+    phone:      "123-123-1234"
+  },
+  billing_address: {
     first_name: "John",
     last_name:  "Smith",
     address1:   "123 Here Now",
@@ -46,12 +56,13 @@ order = {
       sku:      "123332211"
     }
   ],
-  shipping_method: "UPS 1-Day",
+  gift_message:    "Happy B-Day!"
+  shipping_method: "next-day", # or "express" or "standard"
   shipping_cost:   "20.00",
   invoice_url:   "http://example.com/R123123123/invoice"
 }
 
-client   = Trebbianno::Client.new("username", "password")
+client   = Carousel::Client.new("username", "password")
 response = client.send_order_request(order)
 
 if response.success?
@@ -66,7 +77,7 @@ Get inventory
 
 ```ruby
 
-client    = Trebbianno::Client.new("username", "password")
+client    = Carousel::Client.new("username", "password")
 inventory = client.get_inventory
 
 inventory.each do |stock|

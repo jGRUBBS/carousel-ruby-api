@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Trebbianno::Order do
+describe Carousel::Order do
 
   before do
-    @client       = Trebbianno::Client.new("the_username", "the_password")
-    @order_client = Trebbianno::Order.new(@client)
+    @client       = Carousel::Client.new("the_username", "the_password")
+    @order_client = Carousel::Order.new(@client)
     @xml          = Builder::XmlMarkup.new
   end
 

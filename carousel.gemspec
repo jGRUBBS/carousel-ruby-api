@@ -1,13 +1,13 @@
 $:.push File.expand_path("../lib", __FILE__)
-require 'trebbianno/version'
+require 'carousel/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "trebbianno-ruby-api"
-  spec.version       = Trebbianno::VERSION
+  spec.name          = "carousel-ruby-api"
+  spec.version       = Carousel::VERSION
   spec.authors       = ["Justin Grubbs"]
   spec.email         = ["justin@sellect.com"]
-  spec.description   = %q{Ruby Library for Trebbianno Fulfillment API}
-  spec.summary       = %q{This is a library for interfacing with the Trebbianno Fulfillment API}
+  spec.description   = %q{Ruby Library for Carousel Fulfillment API}
+  spec.summary       = %q{This is a library for interfacing with the Carousel Fulfillment API}
   spec.homepage      = "http://sellect.com"
   spec.license       = "MIT"
 

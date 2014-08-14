@@ -7,7 +7,7 @@ require 'rubygems'
 require 'bundler/setup'
 Bundler.require(:default, :development)
 require 'hashie'
-require 'trebbianno'
+require 'carousel'
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
@@ -31,7 +31,7 @@ def xml_header_string(type)
   xml  = "<s:Header><a:Action s:mustUnderstand=\"1\">SII/ISIIService/#{type}</a:Action>"
   xml += "<a:MessageID>urn:uuid:56b55a70-8bbc-471d-94bb-9ca060bcf99f</a:MessageID>"
   xml += "<a:ReplyTo><a:Address>http://www.w3.org/2005/08/addressing/anonymous</a:Address></a:ReplyTo>"
-  xml += "<a:To s:mustUnderstand=\"1\">https://www.trebbianno.us/webservices/SIIService.svc</a:To></s:Header>"
+  xml += "<a:To s:mustUnderstand=\"1\">https://www.carousel.us/webservices/SIIService.svc</a:To></s:Header>"
 end
 
 def xml_user_string

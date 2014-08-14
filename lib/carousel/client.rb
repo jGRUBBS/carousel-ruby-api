@@ -1,12 +1,14 @@
-require 'net/http'
+require 'net/https'
 require 'xmlsimple'
 
-module Trebbianno
+module Carousel
   class Client
 
-    TEST_HOST = "54.235.241.72"
-    LIVE_HOST = "54.235.241.72"
-    PORT      = 4081
+    TEST_HOST = "easyweb.carousellogistics.co.uk"
+    TEST_PATH = "betacarouselwms"
+    LIVE_HOST = "web.carousel.eu"
+    LIVE_PATH = "carouselwms"
+    PORT      = 443
 
     attr_accessor :username, :password, :response, :type, :request_uri, :path
 
@@ -27,13 +29,17 @@ module Trebbianno
 
     def get_inventory
       request = Inventory.new(self).build_inventory_request
-      @path   = Inventory::PATH
+      @path   = build_path(Inventory::PATH)
       post(request).response['stock']
     end
 
     def order_request(order)
-      @path = Order::PATH
+      @path = build_path(Order::PATH)
       Order.new(self).build_order_request(order)
+    end
+
+    def build_path(path)
+      "/#{env_path}/default.asp#{path}"
     end
 
     def upcs(inventory)
@@ -49,7 +55,7 @@ module Trebbianno
     end
 
     def request_uri
-      "http://#{host}:#{PORT}#{@path}"
+      "https://#{host}#{@path}"
     end
 
     private
@@ -68,8 +74,12 @@ module Trebbianno
       @options[:verbose]
     end
 
+    def env_path
+      testing? ? TEST_PATH : LIVE_PATH
+    end
+
     def host
-      testing? ? TEST_HOST : LIVE_HOST 
+      testing? ? TEST_HOST : LIVE_HOST
     end
 
     def log(message)
@@ -78,14 +88,15 @@ module Trebbianno
     end
 
     def http
-      Net::HTTP.new(host, PORT)
+      @http ||= Net::HTTP.new(host, PORT)
     end
 
     def request(xml_request)
       request              = Net::HTTP::Post.new(@path)
       request.body         = xml_request
-      request.content_type = 'text/xml'
-      request.basic_auth(@username, @password)
+      request.content_type = 'application/xml'
+      http.use_ssl         = true
+      http.verify_mode     = OpenSSL::SSL::VERIFY_NONE
       http.request(request)
     end
 

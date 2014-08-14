@@ -1,4 +1,4 @@
-module Trebbianno
+module Carousel
   class Response
 
     attr_accessor :response
@@ -14,6 +14,7 @@ module Trebbianno
     end
 
     def success?
+      # FIXME: needs to give actual boolean parsed from response
       # @response.parsed["#{@type}_response"]["#{@type}_result"][:status] == '0001'
       true
     end

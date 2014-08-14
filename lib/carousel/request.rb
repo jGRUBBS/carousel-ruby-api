@@ -1,6 +1,6 @@
 require 'builder'
 
-module Trebbianno
+module Carousel
   class Request
 
     def initialize(client)
