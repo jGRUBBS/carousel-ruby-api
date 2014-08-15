@@ -4,8 +4,8 @@ require 'xmlsimple'
 module Carousel
   class Client
 
-    TEST_HOST = "easyweb.carousellogistics.co.uk"
-    TEST_PATH = "betacarouselwms"
+    TEST_HOST = "web.carousel.eu"
+    TEST_PATH = "carouselwms"
     LIVE_HOST = "web.carousel.eu"
     LIVE_PATH = "carouselwms"
     PORT      = 443
@@ -23,7 +23,7 @@ module Carousel
 
     def send_order_request(order)
       request  = order_request(order)
-      @path    = Order::PATH
+      @path    = build_path(Order::PATH)
       post(request)
     end
 

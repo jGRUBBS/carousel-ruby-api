@@ -28,13 +28,13 @@ module Carousel
 
     def build_address(xml, address, type)
       prefix = type == :billing ? 'inv' : ''
-      xml.tag! "#{prefix}name"         "#{address[:first_name]} #{address[:last_name]}"
-      xml.tag! "#{prefix}addressline1" address[:address1]
-      xml.tag! "#{prefix}addressline2" address[:address2]
-      xml.tag! "#{prefix}towncity"     address[:city]
-      xml.tag! "#{prefix}postcode"     address[:zipcode]
-      xml.tag! "#{prefix}country"      Country.map(address[:country])
-      xml.tag! "#{prefix}contactphone" address[:phone]
+      xml.tag! "#{prefix}name",         "#{address[:first_name]} #{address[:last_name]}"
+      xml.tag! "#{prefix}addressline1", address[:address1]
+      xml.tag! "#{prefix}addressline2", address[:address2]
+      xml.tag! "#{prefix}towncity",     address[:city]
+      xml.tag! "#{prefix}postcode",     address[:zipcode]
+      xml.tag! "#{prefix}country",      Country.map(address[:country])
+      xml.tag! "#{prefix}contactphone", address[:phone]
     end
 
     def build_line_items(xml, order)
