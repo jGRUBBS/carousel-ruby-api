@@ -9,6 +9,7 @@ module Carousel
     LIVE_HOST = "web.carousel.eu"
     LIVE_PATH = "carouselwms"
     PORT      = 443
+    KEYS_MAP  = { "stockid" => "upc" }
 
     attr_accessor :username, :password, :response, :type, :request_uri, :path
 
@@ -23,14 +24,13 @@ module Carousel
 
     def send_order_request(order)
       request  = order_request(order)
-      @path    = build_path(Order::PATH)
       post(request)
     end
 
     def get_inventory
       request = Inventory.new(self).build_inventory_request
       @path   = build_path(Inventory::PATH)
-      post(request).response['stock']
+      map_results(post(request).response['stock'])
     end
 
     def order_request(order)
@@ -43,13 +43,13 @@ module Carousel
     end
 
     def upcs(inventory)
-      inventory.collect { |s| s["stockid"][0] }
+      inventory.collect { |s| s["upc"] }
     end
 
     def mapped_inventory(upcs, inventory)
       inventory.collect do |stock| 
-        if upcs.include?(stock["stockid"][0])
-          { quantity: stock["qty"][0].to_i }
+        if upcs.include?(stock["upc"])
+          { quantity: stock["qty"].to_i }
         end
       end.compact
     end
@@ -108,6 +108,23 @@ module Carousel
     def parse_response(xml_response)
       log(xml_response)
       @response = Response.new(xml_response, @type)
+    end
+
+    def map_results(results)
+      results = flatten_results(results)
+      results.map do |h|
+        h.inject({ }) { |x, (k,v)| x[map_keys(k)] = v; x }
+      end
+    end
+
+    def flatten_results(results)
+      @flattened ||= results.map do |h| 
+        h.each { |k,v| h[k] = v[0] }
+      end
+    end
+
+    def map_keys(key)
+      KEYS_MAP[key] || key
     end
 
   end
