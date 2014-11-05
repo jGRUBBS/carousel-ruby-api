@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<orderline number="123456">
+  <ordernumber>123456</ordernumber>
+  <sku>100083</sku>
+  <qty>2</qty>
+</orderline>
