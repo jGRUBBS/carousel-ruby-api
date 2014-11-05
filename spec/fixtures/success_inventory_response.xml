@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<stocklines>
+  <stock>
+    <stockid>1000000003642</stockid>
+    <qty>3</qty>
+    <status>OK</status>
+    <details/>
+  </stock>
+  <stock>
+    <stockid>1000000003659</stockid>
+    <qty>2</qty>
+    <status>OK</status>
+    <details/>
+  </stock>
+  <stock>
+    <stockid>1000000003666</stockid>
+    <qty>2</qty>
+    <status>OK</status>
+    <details/>
+  </stock>
+</stocklines>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<orders>
+  <order number="12345">
+    <status>OK</status>
+    <details></details>
+  </order>
+</orders>

@@ -14,14 +14,26 @@ module Carousel
     end
 
     def success?
-      # FIXME: needs to give actual boolean parsed from response
-      # @response.parsed["#{@type}_response"]["#{@type}_result"][:status] == '0001'
-      true
+      status == "OK"
+    end
+
+    def status
+      if @kind == "stock"
+        @response.first["status"]
+      else
+        @response[@kind][0]["status"][0]
+      end
+    end
+
+    def message
+      @response["order"][0]["details"][0]
     end
 
     def parse_response(xml_response)
-      return nil if xml_response.blank?
-      XmlSimple.xml_in(xml_response)
+      return nil if xml_response.nil?
+      parsed = XmlSimple.xml_in(xml_response)
+      @kind  = parsed.first[0]
+      parsed
     end
 
   end

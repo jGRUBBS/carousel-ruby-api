@@ -1,95 +1,88 @@
 require 'spec_helper'
 
 describe Carousel::Client do
-  before do
-    @client = Carousel::Client.new("the_username", "the_password")
+
+  let(:username) { "the_username" }
+  let(:password) { "the_password" }
+  let(:options)  { { verbose: true, test_mode: true } }
+  let(:client)   { Carousel::Client.new(username, password, options) }
+
+  describe '#initialize' do
+    it 'sets the @username, @password and @options' do
+      expect(client.username).to eq(username)
+      expect(client.password).to eq(password)
+      expect(client.options).to  eq(options)
+    end
   end
 
   describe '#send_order_request' do
-    it 'should send order request and return parsed respose' do
-      Carousel::Order.any_instance.should_receive(:build_order_request).with(order_hash)
-      @client.should_receive(:post)
-      @client.send_order_request(order_hash)
+    
+    let(:success_response) { read_xml(:success_order_response) }
+    let(:error_response)   { read_xml(:error_order_response) }
+    let(:response)         { client.send_order_request(order_hash) }
+
+    it 'parses a success response' do
+      stub_post("action=order").to_return(body: success_response)
+      expect(response.success?).to eq(true)
+    end
+
+    it 'parses an error response' do
+      stub_post("action=order").to_return(body: error_response)
+      expect(response.success?).to eq(false)
+      expect(response.message).to  eq('Bad postcode')
+    end
+  end
+
+  describe '#get_inventory' do
+
+    let(:success_response) { read_xml(:success_inventory_response) }
+    let(:response)         { client.get_inventory }
+    let(:expected_upcs)    { ['1000000003642', '1000000003659', '1000000003666'] }
+    let(:expected_qtys)    { ['3', '2', '2'] }
+
+    it 'parses success response and maps results to simple array of stock hashes' do
+      stub_post("action=stocklines").to_return(body: success_response)
+      expect(response.response.collect{ |s| s["upc"] }).to eq(expected_upcs)
+      expect(response.response.collect{ |s| s["qty"] }).to eq(expected_qtys)
+      expect(response.success?).to eq(true)
     end
   end
 
   describe 'private#default_options' do
-    it 'should return a hash' do
-      @client.send(:default_options).should be_a Hash
-    end
+    it 'is pending'
   end
 
   describe 'private#testing?' do
-    it 'should return boolean for test mode' do
-      @client.send(:testing?).should be_false
-      @client.instance_variable_set(:@options, { test_mode: true })
-      @client.send(:testing?).should be_true
-    end
+    it 'is pending'
   end
 
   describe 'private#verbose?' do
-    it 'should return boolean for verbose mode' do
-      @client.send(:verbose?).should be_true
-      @client.instance_variable_set(:@options, { verbose: false })
-      @client.send(:verbose?).should be_false
-    end
+    it 'is pending'
   end
 
   describe 'private#host' do
-    it 'should' do
-      @client.stub(:testing?).and_return(false)
-      @client.send(:host).should == Carousel::Client::LIVE_HOST
-      @client.stub(:testing?).and_return(true)
-      @client.send(:host).should == Carousel::Client::TEST_HOST
-    end
+    it 'is pending'
   end
 
   describe 'private#path' do
-    it 'should' do
-      @client.stub(:testing?).and_return(false)
-      @client.send(:path).should == Carousel::Client::LIVE_PATH
-      @client.stub(:testing?).and_return(true)
-      @client.send(:path).should == Carousel::Client::TEST_PATH
-    end
+    it 'is pending'
   end
 
   describe 'private#log' do
     context 'not in verbose mode' do
-      it 'should not log message' do
-        @client.stub(:verbose?).and_return(false)
-        @client.should_not_receive(:puts)
-        @client.send(:log, "message")
-      end
+      it 'is pending'
     end
     context 'in verbose mode' do
-      it 'should' do
-        @client.stub(:verbose?).and_return(true)
-        @client.should_receive(:puts).with("message")
-        @client.send(:log, "message")
-      end
+      it 'is pending'
     end
   end
 
   describe 'private#post' do
-    it 'should use net http to post xml request' do
-      path        = @client.send(:path)
-      xml_request = "xml_request"
-      response    = Carousel::Response.new("<xml>body</xml>", "new_request")
-      header      = {'Content-Type' => 'text/xml'}
-      Net::HTTP.any_instance.should_receive(:post).with(path, xml_request, header).and_return(response)
-      @client.should_receive(:parse_response).with(response, nil)
-      @client.should_receive(:log).with(response)
-      @client.send(:post, xml_request)
-    end
+    it 'is pending'
   end
 
   describe 'private#parse_response' do
-    it 'should use xml simple to parse the response' do
-      xml_response = "xml_response"
-      XmlSimple.should_receive(:xml_in).with(xml_response)
-      response = @client.send(:parse_response, xml_response)
-      response.should be_a Carousel::Response
-    end
+    it 'is pending'
   end
 
 end
