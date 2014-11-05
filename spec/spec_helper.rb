@@ -36,8 +36,8 @@ def stub_post(path)
   stub_request(:post, "#{base_url}#{path}")
 end
 
-def json_headers
-  { content_type: 'application/json; charset=utf-8' }
+def xml_headers
+  {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/xml', 'User-Agent'=>'Ruby'}
 end
 
 def json_post_headers
