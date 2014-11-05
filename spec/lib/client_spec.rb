@@ -42,16 +42,14 @@ describe Carousel::Client do
     let(:raw_xml)          { read_xml(:inventory_request) }
 
     before do
-      @stub = stub_post("action=stocklines")
-                .with(body: raw_xml, headers: xml_headers)
-                .to_return(body: success_response)
+      stub_post("action=stocklines").with(body: raw_xml, headers: xml_headers)
+        .to_return(body: success_response)
     end
 
     it 'parses success response and maps results to simple array of stock hashes' do
       expect(response.response.collect{ |s| s["upc"] }).to eq(expected_upcs)
       expect(response.response.collect{ |s| s["qty"] }).to eq(expected_qtys)
       expect(response.success?).to eq(true)
-      expect(@stub).to have_been_requested
     end
   end
 
