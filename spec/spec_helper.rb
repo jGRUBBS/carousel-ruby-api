@@ -118,7 +118,8 @@ def order_hash
     billing_address:  address_hash,
     line_items:       line_items_array,
     warehouse:        'DC123',
-    date:             '2013-12-12'
+    date:             '2013-12-12',
+    shipping_method:  'standard'
   }
 end
 
@@ -147,7 +148,7 @@ def company_submit_hash
 end
 
 def fake_response
-  Hashie::Mash.new({body: {test: true}.to_xml})
+  Hashie::Mash.new( {body: read_xml(:success_order_response)} )
 end
 
 
@@ -174,4 +175,15 @@ def enable_output
   @original_stderr = nil
   @original_stdout = nil
   `rm #{log_file} && touch #{log_file}`
+end
+
+def capture_stdout(&block)
+  original_stdout = $stdout
+  $stdout = fake = StringIO.new
+  begin
+    yield
+  ensure
+    $stdout = original_stdout
+  end
+  fake.string
 end
