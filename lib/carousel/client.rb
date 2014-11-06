@@ -11,7 +11,7 @@ module Carousel
     PORT      = 443
     KEYS_MAP  = { "stockid" => "upc" }
 
-    attr_accessor :username, :password, :response, :type, :request_uri, :path
+    attr_accessor :username, :password, :options, :response, :type, :request_uri, :path
 
     def initialize(username, password, options = {})
       raise "Username is required" unless username
@@ -30,7 +30,16 @@ module Carousel
     def get_inventory
       request = Inventory.new(self).build_inventory_request
       @path   = build_path(Inventory::PATH)
-      map_results(post(request).response['stock'])
+      inventory_response(request)
+    end
+
+    # gets the raw inventory response from the provider
+    # then converts provider specific language to match 
+    # a uniform API, stored on @response, and returns
+    def inventory_response(request)
+      response = post(request)
+      response.response = map_results(response.response['stock'])
+      response
     end
 
     def order_request(order)

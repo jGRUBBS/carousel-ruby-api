@@ -1,7 +1,8 @@
 # Carousel
 
-[![Build Status](https://travis-ci.org/jGRUBBS/carousel-ruby-api.svg?branch=master)](https://travis-ci.org/jGRUBBS/carousel-ruby-api)
-[![Code Climate](https://codeclimate.com/github/jGRUBBS/carousel-ruby-api.png)](https://codeclimate.com/github/jGRUBBS/carousel-ruby-api)
+[![Build Status](https://travis-ci.org/jGRUBBS/carousel-ruby-api.svg)](https://travis-ci.org/jGRUBBS/carousel-ruby-api)
+[![Code Climate](https://codeclimate.com/github/jGRUBBS/carousel-ruby-api/badges/gpa.svg)](https://codeclimate.com/github/jGRUBBS/carousel-ruby-api)
+[![Code Climate](https://codeclimate.com/github/jGRUBBS/carousel-ruby-api/badges/gpa.svg)](https://codeclimate.com/github/jGRUBBS/carousel-ruby-api)
 
 Ruby library for interfacing with the Carousel Fulfillment API
 

@@ -1,34 +1,39 @@
 require 'spec_helper'
 
 describe Carousel::Order do
-
-  before do
-    @client       = Carousel::Client.new("the_username", "the_password")
-    @order_client = Carousel::Order.new(@client)
-    @xml          = Builder::XmlMarkup.new
-  end
+  let(:client)  { Carousel::Client.new("the_username", "the_password") }
+  let(:order_request) { Carousel::Order.new(client) }
 
   describe '#build_order_request' do
-    it 'should' do
-      response = @order_client.build_order_request(order_hash)
-      @client.type.should == "new_order_entry"
-      request_body = xml_order_request_string(order_hash)
-      response.should == xml_string("new_order_entry", request_body)
+    it 'builds an xml file based on the order' do
+      expect(order_request.build_order_request(order_hash)).to eq(read_xml(:test_order))
     end
   end
 
   describe 'private#build_address' do
-    it 'should build the proper address xml' do
-      type    = "CUSTOMER"
-      request = @order_client.send(:build_address, @xml, type, order_hash[:shipping_address])
-      request.should == xml_address_string(type, order_hash[:shipping_address])
+    before do
+      @xml = ::Builder::XmlMarkup.new :indent => 2
+      @xml.instruct! :xml, :version=>"1.0", :encoding=>"UTF-8"
+    end
+
+    context 'given a billing address' do
+      it 'adds the address tags with the "inv" prefix' do
+        expect(order_request.send(:build_address, @xml, address_hash, :billing)).to eq(read_xml(:test_shipping_address_builder))
+      end
+    end
+    context 'given any other address' do
+      it 'adds the address tags to the xml file' do
+        expect(order_request.send(:build_address, @xml, address_hash, "shipping")).to eq(read_xml(:test_address_builder))
+      end
     end
   end
 
   describe 'private#build_line_items' do
-    it 'should build the proper line items xml' do
-      request = @order_client.send(:build_line_items, @xml, order_hash)
-      request.should == xml_line_items_string(order_hash)
+    it 'adds the line_items tags to the xml file under orderline' do
+      xml = ::Builder::XmlMarkup.new :indent => 2
+      xml.instruct! :xml, :version=>"1.0", :encoding=>"UTF-8"
+      order_request.send(:build_line_items, xml, order_hash)
+      expect(xml.target!).to eq(read_xml(:test_line_items))
     end
   end
 

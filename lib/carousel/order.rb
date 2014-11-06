@@ -13,7 +13,7 @@ module Carousel
           xml.customerref    order[:number]
           xml.ordernumber    order[:number]
           xml.shippingmethod Shipping.map(order[:shipping_method])
-          xml.giftnote       order[:gift_message] if order[:gift_message].present?
+          xml.giftnote       order[:gift_message] unless order[:gift_message].nil?
 
           build_address xml, order[:shipping_address], :shipping
           build_address xml, order[:billing_address], :billing

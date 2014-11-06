@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<orders>
+  <order>
+    <user>the_username</user>
+    <password>the_password</password>
+    <customerref>123456</customerref>
+    <ordernumber>123456</ordernumber>
+    <shippingmethod>ECONOMY</shippingmethod>
+    <name>Stephen Jones</name>
+    <addressline1>23 Victoria Street</addressline1>
+    <addressline2></addressline2>
+    <towncity>Windsor</towncity>
+    <postcode>SL4 1HE</postcode>
+    <country>UK</country>
+    <contactphone>0123 336 6676</contactphone>
+    <invname>Stephen Jones</invname>
+    <invaddressline1>23 Victoria Street</invaddressline1>
+    <invaddressline2></invaddressline2>
+    <invtowncity>Windsor</invtowncity>
+    <invpostcode>SL4 1HE</invpostcode>
+    <invcountry>UK</invcountry>
+    <invcontactphone>0123 336 6676</invcontactphone>
+    <orderline number="123456">
+      <ordernumber>123456</ordernumber>
+      <sku>100083</sku>
+      <qty>2</qty>
+    </orderline>
+  </order>
+</orders>
