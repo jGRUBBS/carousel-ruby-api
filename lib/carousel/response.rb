@@ -1,7 +1,7 @@
 module Carousel
   class Response
 
-    attr_accessor :response
+    attr_accessor :response, :raw_response
 
     def initialize(raw_response, type)
       @raw_response = raw_response

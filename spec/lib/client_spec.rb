@@ -33,7 +33,7 @@ describe Carousel::Client do
     end
   end
 
-  describe '#get_inventory' do
+  describe 'inventory methods' do
 
     let(:success_response) { read_xml(:success_inventory_response) }
     let(:response)         { client.get_inventory }
@@ -46,17 +46,33 @@ describe Carousel::Client do
         .to_return(body: success_response)
     end
 
-    it 'parses success response and maps results to simple array of stock hashes' do
-      expect(response.response.collect{ |s| s["upc"] }).to eq(expected_upcs)
-      expect(response.response.collect{ |s| s["qty"] }).to eq(expected_qtys)
-      expect(response.success?).to eq(true)
-    end
-  end
+    describe '#get_inventory' do
 
-  describe '#inventory_response' do
-    it 'sends a post request and returns the mapped results' do
+      it 'parses success response and maps results to simple array of stock hashes' do
+        expect(response.response.collect{ |s| s["upc"] }).to eq(expected_upcs)
+        expect(response.response.collect{ |s| s["qty"] }).to eq(expected_qtys)
+        expect(response.success?).to eq(true)
+      end
+    end
+
+    describe '#inventory_response' do
+
+      it 'gets the raw inventory response from the provider' do
+        expect(response.raw_response).to eq(success_response)
+      end
+
+      it 'converts provider specific language to match a uniform API' do
+        original_response = client.send(:parse_response, success_response).response["stock"]
+        expect(original_response.first.keys).to include('stockid') 
+        expect(response.response.first.keys).to include('upc')
+      end
+
+      it 'returns a response' do
+        expect(response).to be_a(Carousel::Response)
+      end
 
     end
+
   end
 
   describe '#order_request' do
@@ -85,7 +101,7 @@ describe Carousel::Client do
   end
 
   describe '#mapped_inventory' do
-    it '' do
+    it 'converts provider specific terms into a uniform API' do
       inventory = [{"upc" => "123", "qty" => "3"}, {"upc" => "123456", "qty" => "0"}]
       upcs = ["123"]
       expect(client.mapped_inventory(upcs, inventory)).to eq([{quantity: 3}])

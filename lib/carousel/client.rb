@@ -33,6 +33,9 @@ module Carousel
       inventory_response(request)
     end
 
+    # gets the raw inventory response from the provider
+    # then converts provider specific language to match 
+    # a uniform API, stored on @response, and returns
     def inventory_response(request)
       response = post(request)
       response.response = map_results(response.response['stock'])
