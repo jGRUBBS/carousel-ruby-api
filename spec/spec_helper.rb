@@ -119,7 +119,7 @@ def order_hash
     line_items:       line_items_array,
     warehouse:        'DC123',
     date:             '2013-12-12',
-    shipping_method:  'standard'
+    shipping_method:  'EU:standard'
   }
 end
 

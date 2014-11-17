@@ -2,9 +2,13 @@ module Carousel
   class Shipping
 
     SHIPPING_MAP = {
-      "next-day" => "ND",
-      "express"  => "EXPRESS",
-      "standard" => "ECONOMY"
+      "EU:next-day" => "EXPRESS",
+      "EU:standard" => "ECONOMY",
+      "UK:next-day" => "ND",
+      "US:standard" => "EXPRESS",
+      "AU:standard" => "ECONOMY",
+      "KR:standard" => "ECONOMY",
+      "SG:standard" => "ECONOMY"
     }
 
     def self.map(code)
