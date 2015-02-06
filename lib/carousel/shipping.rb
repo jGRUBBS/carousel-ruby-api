@@ -4,6 +4,7 @@ module Carousel
     SHIPPING_MAP = {
       "EU:next-day" => "EXPRESS",
       "EU:standard" => "ECONOMY",
+      "UK:standard" => "ECONOMY",
       "UK:next-day" => "ND",
       "US:standard" => "EXPRESS",
       "AU:standard" => "ECONOMY",
