@@ -3,6 +3,10 @@ require 'spec_helper'
 describe Carousel::Tracking do
 
   let(:tracking) { Carousel::Tracking.new('carousel', '123456')}
+
+  before do
+    Carousel.configure(configuration)
+  end
   
   describe '#initialize' do
     it 'sets the carrier and tracking number' do
@@ -20,7 +24,7 @@ describe Carousel::Tracking do
     end
     context 'when carrier is Carousel' do
       it 'returns the Carousel tracking url' do
-        expect(tracking.url).to eq("https://web.carousel.eu/easyweb/default.asp?action=clienttrack&type=Carousel&acct1=BEC01&reference=123456")
+        expect(tracking.url).to eq("https://web.carousel.eu/easyweb/default.asp?action=clienttrack&type=Carousel&acct1=ABC00&reference=123456")
       end
     end
   end
@@ -33,7 +37,7 @@ describe Carousel::Tracking do
     end
     context 'when carrier is Carousel' do
       it 'returns the Carousel tracking url including the tracking number' do
-        expect(tracking.url).to eq("https://web.carousel.eu/easyweb/default.asp?action=clienttrack&type=Carousel&acct1=BEC01&reference=123456")
+        expect(tracking.url).to eq("https://web.carousel.eu/easyweb/default.asp?action=clienttrack&type=Carousel&acct1=ABC00&reference=123456")
       end
     end
   end

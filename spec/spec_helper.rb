@@ -73,11 +73,7 @@ end
 
 def configuration
   { 
-    supplier_code:        'Supplier1', 
-    supplier_description: 'My Supplier', 
-    supplier_uom:         1,
-    warehouses:           {},
-    token: 'token123'
+    account: 'ABC00'
   }
 end
 
@@ -119,7 +115,7 @@ def order_hash
     line_items:       line_items_array,
     warehouse:        'DC123',
     date:             '2013-12-12',
-    shipping_method:  'standard'
+    shipping_method:  'EU:standard'
   }
 end
 
